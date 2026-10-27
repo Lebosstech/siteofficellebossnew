@@ -4,3 +4,6 @@ out/
 .env*.local
 .npm-cache/
 *.log
+
+artifacts/
+*.tsbuildinfo

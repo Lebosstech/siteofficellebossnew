@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -6,38 +6,38 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
       },
       {
-        protocol: 'https',
-        hostname: 'play-lh.googleusercontent.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "play-lh.googleusercontent.com",
+        pathname: "/**",
       },
       {
-        protocol: 'https',
-        hostname: 'mongestionnairepro.com',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "mongestionnairepro.com",
+        pathname: "/**",
       },
       {
-        protocol: 'https',
-        hostname: 'lebosstech.ci',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "lebosstech.ci",
+        pathname: "/**",
       },
     ],
   },
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(self)',
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(self)",
           },
         ],
       },
@@ -46,48 +46,39 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/produits',
-        destination: '/work',
+        source: "/produits",
+        destination: "/realisations",
         permanent: true,
       },
       {
-        source: '/catalogue',
-        destination: '/work',
+        source: "/catalogue",
+        destination: "/realisations",
         permanent: true,
       },
       {
-        source: '/materiel-informatique',
-        destination: '/expertise',
+        source: "/materiel-informatique",
+        destination: "/expertises",
         permanent: true,
       },
       {
-        source: '/services',
-        destination: '/expertise',
+        source: "/services",
+        destination: "/expertises",
         permanent: true,
       },
       {
-        source: '/solutions',
-        destination: '/work',
+        source: "/solutions",
+        destination: "/realisations",
+        permanent: true,
+      },
+
+      {
+        source: "/developpement",
+        destination: "/expertises",
         permanent: true,
       },
       {
-        source: '/realisations',
-        destination: '/work',
-        permanent: true,
-      },
-      {
-        source: '/a-propos',
-        destination: '/studio',
-        permanent: true,
-      },
-      {
-        source: '/developpement',
-        destination: '/expertise',
-        permanent: true,
-      },
-      {
-        source: '/panier',
-        destination: '/contact',
+        source: "/panier",
+        destination: "/contact",
         permanent: true,
       },
     ];

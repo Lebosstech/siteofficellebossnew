@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import React from "react";
+import Link from "next/link";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -15,7 +15,8 @@ export default function NotFound() {
         </h1>
 
         <p className="text-sm text-type-secondary font-sans leading-relaxed">
-          La page demandée n&apos;existe pas ou a été réorganisée dans le cadre de notre nouvelle architecture éditoriale.
+          La page demandée n&apos;existe pas ou a été réorganisée dans le cadre
+          de notre nouvelle architecture éditoriale.
         </p>
 
         <div className="pt-4 flex flex-wrap justify-center gap-3">
@@ -23,8 +24,8 @@ export default function NotFound() {
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>RETOUR À L&apos;ACCUEIL</span>
           </Link>
-          <Link href="/work" className="btn-studio-ghost">
-            <span>SELECTED WORK</span>
+          <Link href="/realisations" className="btn-studio-ghost">
+            <span>NOS RÉALISATIONS</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>

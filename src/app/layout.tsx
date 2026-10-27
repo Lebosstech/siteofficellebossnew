@@ -1,71 +1,59 @@
-import type { Metadata } from 'next';
-import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
-import './globals.css';
-import { StudioHeader } from '@/components/layout/studio-header';
-import { StudioFooter } from '@/components/layout/studio-footer';
-import { SmoothScrollProvider } from '@/components/motion/smooth-scroll-provider';
+import type { Metadata } from "next";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
-});
+import "./globals.css";
+import "./experience.css";
+import "@fontsource/inter/latin-400.css";
+import "@fontsource/inter/latin-500.css";
+import "@fontsource/space-grotesk/latin-400.css";
+import "@fontsource/space-grotesk/latin-500.css";
+import "@fontsource/jetbrains-mono/latin-400.css";
+import { StudioHeader } from "@/components/layout/studio-header";
+import { StudioFooter } from "@/components/layout/studio-footer";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lebosstech.ci'),
+  metadataBase: new URL("https://lebosstech.ci"),
   title: {
-    default: 'LEBOSS TECH — Studio Technologique & Ingénierie Numérique Haut de Gamme',
-    template: '%s | LEBOSS TECH',
+    default:
+      "LEBOSS TECH — Studio Technologique & Ingénierie Numérique Haut de Gamme",
+    template: "%s | LEBOSS TECH",
   },
   description:
-    'Studio technologique d’ingénierie logicielle, d’architectures distribuées et d’infrastructures informatiques d’entreprise basé à Abidjan, Côte d’Ivoire.',
+    "Studio technologique d’ingénierie logicielle, d’architectures distribuées et d’infrastructures informatiques d’entreprise basé à Abidjan, Côte d’Ivoire.",
   keywords: [
-    'LEBOSS TECH',
-    'studio technologique Abidjan',
-    'ingénierie logicielle Côte d’Ivoire',
-    'architecture microservices',
-    'développement sur mesure',
-    'Mon Gestionnaire Pro',
-    'SRA logistique',
-    'Lounan',
-    'Djonan',
+    "LEBOSS TECH",
+    "studio technologique Abidjan",
+    "ingénierie logicielle Côte d’Ivoire",
+    "architecture microservices",
+    "développement sur mesure",
+    "Mon Gestionnaire Pro",
+    "SRA logistique",
+    "Lounan",
+    "Djonan",
   ],
   openGraph: {
-    type: 'website',
-    locale: 'fr_CI',
-    url: 'https://lebosstech.ci',
-    siteName: 'LEBOSS TECH',
-    title: 'LEBOSS TECH — Luxury Technology Studio',
+    type: "website",
+    locale: "fr_CI",
+    url: "https://lebosstech.ci",
+    siteName: "LEBOSS TECH",
+    title: "LEBOSS TECH — Luxury Technology Studio",
     description:
-      'Nous imaginons. Nous concevons. Nous développons. Studio d’ingénierie et de transformation technologique à Abidjan.',
+      "Nous imaginons. Nous concevons. Nous développons. Studio d’ingénierie et de transformation technologique à Abidjan.",
     images: [
       {
-        url: '/images/og-preview.jpg',
+        url: "/images/og-preview.jpg",
         width: 1200,
         height: 630,
-        alt: 'LEBOSS TECH — Luxury Technology Studio',
+        alt: "LEBOSS TECH — Luxury Technology Studio",
       },
     ],
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/images/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/images/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: "/favicon.ico" },
+      { url: "/images/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
-    apple: [{ url: '/images/apple-touch-icon.png', sizes: '180x180' }],
+    apple: [{ url: "/images/apple-touch-icon.png", sizes: "180x180" }],
   },
 };
 
@@ -75,18 +63,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="fr"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} dark`}
-    >
+    <html lang="fr" className="dark">
       <body className="min-h-screen flex flex-col bg-[#090A0B] text-[#F5F5F3] font-sans antialiased selection:bg-[#FF6A00]/25 selection:text-[#F5F5F3]">
-        <SmoothScrollProvider>
+        <>
           <StudioHeader />
           <main id="main-content" className="flex-1">
             {children}
           </main>
           <StudioFooter />
-        </SmoothScrollProvider>
+        </>
       </body>
     </html>
   );
