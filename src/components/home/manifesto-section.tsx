@@ -48,3 +48,4 @@ export function ManifestoSection() {
     </section>
   );
 }
+

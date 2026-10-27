@@ -166,3 +166,4 @@ export function IntroSequence({ onComplete }: IntroSequenceProps) {
     </div>
   );
 }
+
