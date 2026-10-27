@@ -1,46 +1,61 @@
 import type { Metadata } from 'next';
+import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import { CartProvider } from '@/context/cart-context';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { FloatingElements } from '@/components/layout/floating-elements';
+import { StudioHeader } from '@/components/layout/studio-header';
+import { StudioFooter } from '@/components/layout/studio-footer';
+import { SmoothScrollProvider } from '@/components/motion/smooth-scroll-provider';
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://lebosstech.ci'),
   title: {
-    default: 'LEBOSS TECH — Ingénierie Logicielle, Matériel Informatique & Infrastructure IT à Abidjan',
+    default: 'LEBOSS TECH — Studio Technologique & Ingénierie Numérique Haut de Gamme',
     template: '%s | LEBOSS TECH',
   },
   description:
-    'Entreprise de Services Numériques (ESN), éditeur de logiciels métier (Mon Gestionnaire Pro, SRA, Lounan, Djonan) et centrale de matériel informatique professionnel & maintenance IT à Abidjan, Côte d’Ivoire.',
+    'Studio technologique d’ingénierie logicielle, d’architectures distribuées et d’infrastructures informatiques d’entreprise basé à Abidjan, Côte d’Ivoire.',
   keywords: [
     'LEBOSS TECH',
-    'ESN Abidjan',
-    'développement logiciel Côte d’Ivoire',
-    'application mobile Abidjan',
-    'matériel informatique Abidjan',
-    'ordinateur portable professionnel Abidjan',
-    'maintenance informatique PME Abidjan',
-    'installation réseau informatique Abidjan',
+    'studio technologique Abidjan',
+    'ingénierie logicielle Côte d’Ivoire',
+    'architecture microservices',
+    'développement sur mesure',
     'Mon Gestionnaire Pro',
+    'SRA logistique',
     'Lounan',
     'Djonan',
-    'SRA livraison',
   ],
   openGraph: {
     type: 'website',
     locale: 'fr_CI',
     url: 'https://lebosstech.ci',
     siteName: 'LEBOSS TECH',
-    title: 'LEBOSS TECH — Votre Technologie. Notre Expertise.',
+    title: 'LEBOSS TECH — Luxury Technology Studio',
     description:
-      'Équipements informatiques, infrastructures réseau, développement logiciel et maintenance : LEBOSS TECH accompagne les entreprises dans leur performance numérique.',
+      'Nous imaginons. Nous concevons. Nous développons. Studio d’ingénierie et de transformation technologique à Abidjan.',
     images: [
       {
         url: '/images/og-preview.jpg',
         width: 1200,
         height: 630,
-        alt: 'LEBOSS TECH — Ingénierie Logicielle, Matériel & Infrastructure IT',
+        alt: 'LEBOSS TECH — Luxury Technology Studio',
       },
     ],
   },
@@ -60,24 +75,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen flex flex-col bg-white text-navy-950 font-sans">
-        <CartProvider>
-          <Header />
+    <html
+      lang="fr"
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} dark`}
+    >
+      <body className="min-h-screen flex flex-col bg-[#090A0B] text-[#F5F5F3] font-sans antialiased selection:bg-[#FF6A00]/25 selection:text-[#F5F5F3]">
+        <SmoothScrollProvider>
+          <StudioHeader />
           <main id="main-content" className="flex-1">
             {children}
           </main>
-          <Footer />
-          <FloatingElements />
-        </CartProvider>
+          <StudioFooter />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

@@ -46,28 +46,48 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/categories/imprimantes-360',
-        destination: '/categories/imprimante',
-        permanent: true,
-      },
-      {
-        source: '/marque/dell-737',
-        destination: '/marque/dell',
-        permanent: true,
-      },
-      {
-        source: '/marque/dell-937',
-        destination: '/marque/dell',
-        permanent: true,
-      },
-      {
-        source: '/mentions-legales',
-        destination: '/cgu#art-1',
+        source: '/produits',
+        destination: '/work',
         permanent: true,
       },
       {
         source: '/catalogue',
-        destination: '/produits',
+        destination: '/work',
+        permanent: true,
+      },
+      {
+        source: '/materiel-informatique',
+        destination: '/expertise',
+        permanent: true,
+      },
+      {
+        source: '/services',
+        destination: '/expertise',
+        permanent: true,
+      },
+      {
+        source: '/solutions',
+        destination: '/work',
+        permanent: true,
+      },
+      {
+        source: '/realisations',
+        destination: '/work',
+        permanent: true,
+      },
+      {
+        source: '/a-propos',
+        destination: '/studio',
+        permanent: true,
+      },
+      {
+        source: '/developpement',
+        destination: '/expertise',
+        permanent: true,
+      },
+      {
+        source: '/panier',
+        destination: '/contact',
         permanent: true,
       },
     ];

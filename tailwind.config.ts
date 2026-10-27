@@ -10,43 +10,60 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        leboss: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          200: '#fed7aa',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#FF6A00', // Orange officiel LEBOSS TECH
-          600: '#ea580c',
-          700: '#c2410c',
-          800: '#9a3412',
-          900: '#7c2d12',
-          950: '#431407',
+        dark: {
+          bg: '#090A0B',
+          surface: '#141517',
+          surface2: '#1A1C1E',
+          surface3: '#22252A',
+          border: 'rgba(255, 255, 255, 0.08)',
+          borderSubtle: 'rgba(255, 255, 255, 0.04)',
+          borderStrong: 'rgba(255, 255, 255, 0.16)',
         },
-        navy: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0b1220',
-          950: '#060b14', // Noir profond architectural
+        type: {
+          primary: '#F5F5F3',
+          secondary: '#96989C',
+          tertiary: '#61646B',
+          inverted: '#090A0B',
+        },
+        accent: {
+          orange: '#FF6A00',
+          orangeSubtle: 'rgba(255, 106, 0, 0.12)',
+          orangeHover: '#FF7D1E',
+          cream: '#F2F0EC',
         },
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Inter', '-apple-system', 'sans-serif'],
+        display: ['var(--font-display)', 'Space Grotesk', 'Syne', 'sans-serif'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'Menlo', 'monospace'],
+      },
+      letterSpacing: {
+        tightest: '-0.04em',
+        tighter: '-0.03em',
+        tight: '-0.02em',
+        wideMono: '0.12em',
+        widestMono: '0.2em',
       },
       boxShadow: {
-        xs: '0 1px 2px 0 rgba(6, 11, 20, 0.05)',
-        card: '0 4px 20px -2px rgba(6, 11, 20, 0.05), 0 1px 3px 0 rgba(6, 11, 20, 0.03)',
-        'card-hover': '0 24px 48px -12px rgba(6, 11, 20, 0.14), 0 4px 14px -2px rgba(255, 106, 0, 0.10)',
-        'glow-orange': '0 10px 30px -5px rgba(255, 106, 0, 0.42)',
-        premium: '0 20px 50px -12px rgba(6, 11, 20, 0.08)',
-        'premium-lg': '0 25px 60px -15px rgba(6, 11, 20, 0.16)',
+        glass: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08)',
+        'glass-hover': '0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.15)',
+        'orange-laser': '0 0 20px -2px rgba(255, 106, 0, 0.35)',
+        'orange-dot': '0 0 10px rgba(255, 106, 0, 0.8)',
+      },
+      animation: {
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'light-flow': 'lightFlow 6s linear infinite',
+        'glow-scan': 'glowScan 4s ease-in-out infinite',
+      },
+      keyframes: {
+        lightFlow: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+        glowScan: {
+          '0%, 100%': { opacity: '0.3', transform: 'scale(0.98)' },
+          '50%': { opacity: '0.9', transform: 'scale(1.02)' },
+        },
       },
     },
   },

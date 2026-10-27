@@ -1,31 +1,31 @@
+import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Search } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="bg-slate-50 min-h-[70vh] flex items-center justify-center py-16">
-      <div className="container-leboss max-w-lg text-center bg-white rounded-3xl p-10 border border-slate-200 shadow-card space-y-5">
-        <span className="inline-block px-3 py-1 rounded-full bg-leboss-50 text-leboss-600 text-xs font-extrabold font-mono">
-          Erreur 404
+    <div className="min-h-[75vh] flex items-center justify-center py-24 studio-container">
+      <div className="glass-card rounded-3xl p-10 sm:p-14 border border-white/[0.1] max-w-lg text-center space-y-6">
+        <span className="font-mono text-xs text-accent-orange font-bold px-3 py-1 rounded-full bg-accent-orange/10 border border-accent-orange/20 inline-block">
+          ERR_404 // COORDONNÉES INTROUVABLES
         </span>
-        <h1 className="text-3xl font-extrabold text-navy-950">
-          Cette page ou ce produit a été déplacé
+
+        <h1 className="display-hero text-3xl sm:text-4xl text-type-primary font-display font-medium">
+          Ressource non localisée
         </h1>
-        <p className="text-sm text-slate-600">
-          Utilisez notre moteur de recherche ou accédez directement au catalogue de matériel informatique et à nos solutions logicielles.
+
+        <p className="text-sm text-type-secondary font-sans leading-relaxed">
+          La page demandée n&apos;existe pas ou a été réorganisée dans le cadre de notre nouvelle architecture éditoriale.
         </p>
-        <div className="flex flex-wrap justify-center gap-3 pt-2">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-navy-950 text-white text-xs font-extrabold"
-          >
-            <ArrowLeft className="w-4 h-4" /> Accueil
+
+        <div className="pt-4 flex flex-wrap justify-center gap-3">
+          <Link href="/" className="btn-studio">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>RETOUR À L&apos;ACCUEIL</span>
           </Link>
-          <Link
-            href="/produits"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-leboss-500 text-white text-xs font-extrabold"
-          >
-            <Search className="w-4 h-4" /> Catalogue Produits
+          <Link href="/work" className="btn-studio-ghost">
+            <span>SELECTED WORK</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </div>
