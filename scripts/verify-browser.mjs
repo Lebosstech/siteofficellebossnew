@@ -13,6 +13,7 @@ const errors = [];
 try {
   const page = await browser.newPage({
     viewport: { width: 1440, height: 900 },
+    reducedMotion: "reduce",
   });
   page.on("pageerror", (e) => errors.push(e.message));
   await mkdir("artifacts", { recursive: true });
@@ -38,7 +39,11 @@ try {
       waitUntil: "networkidle",
     });
     assert.equal(response.status(), 200, route);
-    assert.equal(await page.locator("h1,h2").first().isVisible(), true, route);
+    assert.equal(
+      await page.locator("main h1, main section h2").first().isVisible(),
+      true,
+      route,
+    );
   }
   await page.goto(base, { waitUntil: "networkidle" });
   for (const [width, height] of [
@@ -61,6 +66,7 @@ try {
     await page.screenshot({ path: `artifacts/home-${width}.png` });
   }
   await page.setViewportSize({ width: 1440, height: 900 });
+  await page.locator("#automatisation summary").click();
   const automation = page.locator(".automation-demo");
   await automation.scrollIntoViewIfNeeded();
   const pause = automation.getByRole("button", { name: "Mettre en pause" });
@@ -83,6 +89,7 @@ try {
     await automation.locator("[role=status]").innerText(),
     /Justificatif ajouté/,
   );
+  await page.locator("#developpement summary").click();
   const dev = page.locator(".development-demo");
   await dev
     .getByRole("button", { name: "Application mobile", exact: true })
@@ -91,11 +98,13 @@ try {
   assert.equal(await dev.locator(".mode-1.stage-3").count(), 1);
   await page.waitForTimeout(850);
   await dev.screenshot({ path: "artifacts/development.png" });
+  await page.locator("#infrastructure summary").click();
   const infra = page.locator(".infrastructure-demo");
   await infra.getByRole("button", { name: "Maintenance", exact: true }).click();
   assert.equal(await infra.locator(".has-incident").count(), 1);
   await page.waitForTimeout(850);
   await infra.screenshot({ path: "artifacts/infrastructure.png" });
+  await page.locator("#ingenierie summary").click();
   const network = page.locator(".network-demo");
   await network
     .getByRole("button", { name: "Imprimante partagée", exact: true })
@@ -129,8 +138,9 @@ try {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(base);
   await page.waitForLoadState("networkidle");
-  assert.equal(await page.locator(".engine-window").count(), 1);
-  assert.equal(await page.locator(".digital-engine canvas").count(), 0);
+  assert.equal(await page.locator(".gravity-field").count(), 1);
+  assert.equal(await page.locator(".gravity-field canvas").count(), 1);
+  await page.locator("#automatisation summary").click();
   await page.locator("#automatisation").scrollIntoViewIfNeeded();
   assert.equal(
     await page

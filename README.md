@@ -1,6 +1,6 @@
-# LEBOSS TECH — The Intelligent System
+# LEBOSS TECH — Gravity Studio
 
-Site vitrine français, Next.js 15 / React 19 / TypeScript. Géométrie originale Three.js, repli SVG, démonstrations React déterministes et transitions GSAP/ScrollTrigger. Aucun catalogue ni paiement.
+Site vitrine français, Next.js 15 / React 19 / TypeScript. Direction Gravity : sphères procédurales Three.js, palettes interactives, repli CSS, démonstrations React déterministes et transitions GSAP/ScrollTrigger. Aucun catalogue ni paiement.
 
 ## Développement
 
@@ -43,10 +43,14 @@ La limitation en mémoire est propre à chaque instance. En production multi-ins
 - Les marques sont présentées par catégorie en texte, sans réinterpréter leurs logos ni les qualifier de partenaires. `src/data/studio.ts` contient une collection de partenariats vide ; seuls les éléments `validated` peuvent s’afficher.
 - Les technologies publiées sont celles vérifiées dans ce dépôt. Les photographies d’équipe/bureau et les statistiques non sourcées ont été évitées.
 - Les mentions légales, la durée de conservation des emails et les informations d’hébergement doivent être validées par l’entreprise avant publication. Les textes actuels décrivent la fonction réelle.
-- Le prompt Ascend cité dans le brief n’a pas été fourni. Aucune ressource propriétaire GetLayers n’est utilisée.
+- Les briefs Ascend et Gravity ont été fournis comme références. La direction Gravity est adaptée aux textes et informations LEBOSS TECH ; aucun contenu d’agence fictive ni asset distant n’est publié.
 
 ## Mouvement et performance
 
-Le canvas charge Three.js séparément, plafonne le DPR à 1,6, réduit le nombre de nœuds sur mobile et ne rend pas hors écran ou lorsque l’onglet est caché. Les ressources GPU, observateurs et timelines sont libérés au démontage. Le repli SVG et les liens restent utilisables sans WebGL ; le texte est rendu côté serveur et visible sans JavaScript. Les transitions sont locales à chaque section et suivent le défilement dans les deux sens, sans blocage de scroll. En mouvement réduit, aucun canvas ni boucle automatique des démonstrations ; les commandes manuelles restent disponibles. Les modèles de développement passent en composition verticale sur mobile.
+Le canvas charge Three.js séparément, plafonne le DPR à 2 et utilise 96 sphères sur ordinateur, 54 sur mobile. La scène suit quatre états mesurés sur les sections : accueil, chute, cœur, envol. Le pointeur et la vitesse du geste influencent la répulsion. Le panneau de palettes permet une reconstruction propre de la scène et une pause du décor. Le défilement à la molette utilise une interpolation de 0,09 ; le tactile, le clavier et la barre de défilement restent natifs.
+
+Les ressources GPU et observateurs sont libérés au démontage. Le rendu est suspendu quand l’onglet est caché. En mouvement réduit ou en pause, le décor est statique et ne se redessine que pour un changement de position ou de dimensions. Sans WebGL, un repli CSS s’affiche. Le texte est rendu côté serveur ; aucune dépendance distante n’est nécessaire au rendu des polices ou des sphères.
+
+Pour vérifier la direction Gravity avec le serveur de production sur le port 3003 : `npm run test:gravity`. Les captures se trouvent dans `artifacts/gravity/`. Le script vérifie la scène, les palettes, le tiroir, le clavier, les routes et le responsive. Les tests d’API restent indépendants du rendu graphique.
 
 Les objectifs 60 fps et Core Web Vitals doivent être mesurés sur appareils réels après déploiement : les captures Chromium ne prouvent pas les performances GPU d’un téléphone.

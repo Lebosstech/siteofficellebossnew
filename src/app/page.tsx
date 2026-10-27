@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SystemTransition } from "@/components/experience/system-transition";
 import { ArrowUpRight, ArrowDown } from "lucide-react";
-import { DigitalEngine } from "@/components/experience/digital-engine";
+import { GravityExperience } from "@/components/gravity/gravity-experience";
 import { MotionController } from "@/components/experience/motion-controller";
 import {
   AutomationDemo,
@@ -17,44 +17,42 @@ import {
 import { ContactBlock } from "@/components/experience/contact-form";
 export default function HomePage() {
   return (
-    <div className="intelligent-system">
+    <div className="intelligent-system gravity-home">
+      <GravityExperience />
       <MotionController />
-      <section className="hero section-wrap">
-        <div className="hero-topline mono">
-          <span>
-            <i /> INDEPENDENT TECHNOLOGY & ENGINEERING STUDIO
-          </span>
-          <span>ABIDJAN, CI — DEPUIS LE TERRAIN.</span>
-        </div>
-        <div className="hero-composition">
-          <div className="hero-copy">
-            <h1>
+      <section className="gravity-hero" aria-labelledby="gravity-headline">
+        <div className="gravity-hero-content">
+          <div className="gravity-hero-title">
+            <span className="gravity-eyebrow">
+              [ INDEPENDENT TECHNOLOGY & ENGINEERING STUDIO ]
+            </span>
+            <h1 id="gravity-headline">
               Nous donnons vie
               <br />à vos ambitions
               <br />
-              <em>technologiques.</em>
+              technologiques.
             </h1>
+          </div>
+          <div className="gravity-hero-aside">
             <p>
               Nous concevons des applications, automatisons les processus métier
               et faisons évoluer vos infrastructures informatiques.
             </p>
-            <div className="hero-actions">
-              <Link className="primary-link" href="/expertises">
-                Explorer nos expertises <ArrowUpRight size={18} />
+            <div className="gravity-hero-links">
+              <Link href="/expertises">
+                Explorer nos expertises <ArrowUpRight size={16} />
               </Link>
-              <Link className="text-link" href="/realisations">
+              <Link href="/realisations">
                 Nos réalisations <ArrowUpRight size={16} />
               </Link>
             </div>
+            <span className="gravity-location">
+              ABIDJAN, CI — DEPUIS LE TERRAIN.
+            </span>
+            <a href="#automatisation" className="gravity-scroll">
+              <ArrowDown size={14} /> EXPLORER LE SYSTÈME
+            </a>
           </div>
-          <DigitalEngine />
-        </div>
-        <div className="hero-bottom mono">
-          <a href="#automatisation">
-            <ArrowDown size={15} /> EXPLORER LE SYSTÈME
-          </a>
-          <span>LOGICIEL · AUTOMATISATION · INFRASTRUCTURE</span>
-          <span>01 — 08</span>
         </div>
       </section>
       <div className="manifesto-strip section-wrap">
@@ -217,7 +215,15 @@ function Chapter({
           </Link>
           <div className="chapter-line" />
         </div>
-        <div className="chapter-visual">{children}</div>
+        <div className="chapter-visual">
+          <details className="gravity-demo-disclosure">
+            <summary>
+              <span>Démonstration interactive</span>
+              <ArrowUpRight size={18} />
+            </summary>
+            <div className="gravity-demo-content">{children}</div>
+          </details>
+        </div>
       </div>
       <div className="chapter-transition mono">
         <span>CONNEXION ÉTABLIE</span>

@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import "./experience.css";
+import "./gravity.css";
+import "@fontsource/raleway/latin-400.css";
+import "@fontsource/raleway/latin-500.css";
+import "@fontsource/raleway/latin-600.css";
 import "@fontsource/inter/latin-400.css";
 import "@fontsource/inter/latin-500.css";
 import "@fontsource/space-grotesk/latin-400.css";
@@ -63,8 +67,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className="dark">
-      <body className="min-h-screen flex flex-col bg-[#090A0B] text-[#F5F5F3] font-sans antialiased selection:bg-[#FF6A00]/25 selection:text-[#F5F5F3]">
+    <html lang="fr" className="gravity-design">
+      <body className="min-h-screen flex flex-col font-sans antialiased">
         <>
           <StudioHeader />
           <main id="main-content" className="flex-1">
