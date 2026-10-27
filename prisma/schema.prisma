@@ -1,0 +1,455 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum ProductCondition {
+  NEW
+  REFURBISHED
+  USED
+}
+
+enum ProductStatus {
+  PUBLISHED
+  DRAFT
+  ARCHIVED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  MOBILE_MONEY
+  PAYSTACK
+  BANK_TRANSFER
+}
+
+enum QuoteStatus {
+  NEW
+  IN_REVIEW
+  QUOTED
+  ACCEPTED
+  REJECTED
+  CLOSED
+}
+
+enum ContactStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         UserRole   @default(EDITOR)
+  isActive     Boolean    @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  auditLogs    AuditLog[]
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  image       String?
+  iconName    String?
+  parentId    String?
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  sortOrder   Int        @default(0)
+  isActive    Boolean    @default(true)
+  seoTitle    String?
+  seoDesc     String?
+  products    Product[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([slug])
+  @@index([parentId])
+}
+
+model Brand {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  logo        String?
+  description String?
+  websiteUrl  String?
+  isActive    Boolean   @default(true)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([slug])
+}
+
+model Product {
+  id               String           @id @default(cuid())
+  sku              String           @unique
+  name             String
+  slug             String           @unique
+  shortDescription String?
+  description      String           @db.Text
+  price            Int // Montant entier en FCFA (XOF)
+  compareAtPrice   Int? // Ancien prix FCFA si promotion réelle
+  costPrice        Int?
+  stockQuantity    Int              @default(0)
+  lowStockAlert    Int              @default(2)
+  inStock          Boolean          @default(true)
+  condition        ProductCondition @default(REFURBISHED)
+  status           ProductStatus    @default(PUBLISHED)
+  warrantyInfo     String?
+  includedItems    String?
+  deliveryInfo     String?
+  isFeatured       Boolean          @default(false)
+  isNewArrival     Boolean          @default(false)
+  isPromo          Boolean          @default(false)
+  viewCount        Int              @default(0)
+  categoryId       String
+  category         Category         @relation(fields: [categoryId], references: [id])
+  brandId          String?
+  brand            Brand?           @relation(fields: [brandId], references: [id])
+  images           ProductImage[]
+  specs            ProductSpec[]
+  orderItems       OrderItem[]
+  seoTitle         String?
+  seoDescription   String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@index([slug])
+  @@index([categoryId])
+  @@index([brandId])
+  @@index([price])
+  @@index([status, inStock])
+  @@index([isFeatured, isPromo])
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  publicId  String?
+  altText   String?
+  isMain    Boolean  @default(false)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}
+
+model ProductSpec {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  groupName String  @default("Caractéristiques générales")
+  label     String
+  value     String
+  sortOrder Int     @default(0)
+
+  @@index([productId])
+}
+
+model Customer {
+  id          String   @id @default(cuid())
+  fullName    String
+  phone       String   @unique
+  email       String?
+  companyName String?
+  city        String   @default("Abidjan")
+  commune     String?
+  address     String?
+  orders      Order[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([phone])
+  @@index([email])
+}
+
+model Order {
+  id               String        @id @default(cuid())
+  orderNumber      String        @unique
+  customerId       String?
+  customer         Customer?     @relation(fields: [customerId], references: [id])
+  customerName     String
+  customerPhone    String
+  customerEmail    String?
+  companyName      String?
+  city             String
+  commune          String?
+  deliveryAddress  String
+  deliveryMethod   String        @default("STANDARD_ABIDJAN")
+  deliveryNotes    String?
+  subtotalAmount   Int // FCFA
+  deliveryFee      Int           @default(0) // FCFA
+  discountAmount   Int           @default(0) // FCFA
+  totalAmount      Int // FCFA
+  status           OrderStatus   @default(PENDING)
+  paymentMethod    PaymentMethod @default(CASH_ON_DELIVERY)
+  paymentStatus    PaymentStatus @default(PENDING)
+  whatsappOpenedAt DateTime?
+  internalNotes    String?       @db.Text
+  items            OrderItem[]
+  payments         Payment[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([orderNumber])
+  @@index([status])
+  @@index([paymentStatus])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName String
+  productSku  String
+  unitPrice   Int // FCFA
+  quantity    Int
+  totalPrice  Int // FCFA
+
+  @@index([orderId])
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  orderId           String
+  order             Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider          String        @default("PAYSTACK")
+  providerReference String        @unique
+  amount            Int // FCFA
+  currency          String        @default("XOF")
+  status            PaymentStatus @default(PENDING)
+  channel           String?
+  rawWebhookPayload Json?
+  verifiedAt        DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([orderId])
+  @@index([providerReference])
+}
+
+model QuoteRequest {
+  id              String      @id @default(cuid())
+  referenceNumber String      @unique
+  fullName        String
+  companyName     String?
+  email           String
+  phone           String
+  serviceType     String // SOFTWARE, HARDWARE, INFRASTRUCTURE, MAINTENANCE, APP_DEMO
+  budgetRange     String?
+  timeline        String?
+  productSlug     String?
+  description     String      @db.Text
+  status          QuoteStatus @default(NEW)
+  assignedTo      String?
+  internalNotes   String?     @db.Text
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ContactMessage {
+  id            String        @id @default(cuid())
+  fullName      String
+  email         String
+  phone         String?
+  subject       String
+  message       String        @db.Text
+  status        ContactStatus @default(UNREAD)
+  internalNotes String?       @db.Text
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([status])
+}
+
+model Service {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique
+  category     String
+  shortDesc    String
+  heroTitle    String
+  heroSubtitle String
+  iconName     String   @default("Server")
+  features     Json
+  benefits     Json
+  processSteps Json
+  deliverables Json
+  isPublished  Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  seoTitle     String?
+  seoDesc      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SoftwareApp {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  name             String
+  shortName        String
+  tagline          String
+  category         String
+  badge            String
+  status           String
+  platforms        Json
+  officialUrl      String
+  officialUrlLabel String
+  icon             String
+  heroImage        String
+  screenshots      Json
+  shortDescription String   @db.Text
+  fullDescription  String   @db.Text
+  problemSolved    String   @db.Text
+  targetAudience   String
+  keyMetrics       Json
+  features         Json
+  techStack        Json
+  sortOrder        Int      @default(0)
+  isPublished      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  clientName  String
+  category    String
+  year        String
+  status      String   @default("Terminé")
+  heroImage   String
+  officialUrl String?
+  summary     String   @db.Text
+  context     String   @db.Text
+  problem     String   @db.Text
+  solution    String   @db.Text
+  result      String   @db.Text
+  tags        Json
+  isFeatured  Boolean  @default(true)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  category    String
+  readTime    String   @default("5 min")
+  excerpt     String   @db.Text
+  content     String   @db.Text
+  coverImage  String?
+  isPublished Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  seoTitle    String?
+  seoDesc     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MaintenancePlan {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  subtitle    String
+  priceLabel  String
+  period      String
+  features    Json
+  isPopular   Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FAQ {
+  id          String   @id @default(cuid())
+  category    String   @default("Général")
+  question    String
+  answer      String   @db.Text
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  authorName  String
+  authorRole  String
+  companyName String
+  content     String   @db.Text
+  rating      Int      @default(5)
+  isVerified  Boolean  @default(false)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model SiteSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  description String?
+  updatedAt   DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+}

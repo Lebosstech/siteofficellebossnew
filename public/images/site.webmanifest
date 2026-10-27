@@ -1,0 +1,28 @@
+{
+  "name": "LEBOSS TECH - Solutions Informatiques & Numériques",
+  "short_name": "LEBOSS TECH",
+  "description": "Entreprise informatique à Abidjan : ingénierie logicielle, matériel professionnel, réseaux et maintenance.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#061626",
+  "theme_color": "#e57125",
+  "icons": [
+    {
+      "src": "/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
