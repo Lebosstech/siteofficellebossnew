@@ -60,10 +60,10 @@ export function StudioHeader() {
       <header className="site-header">
         <Link href="/" aria-label="LEBOSS TECH — Accueil" className="brand">
           <Image
-            src="/images/logo.webp"
+            src="/images/logo.jpg"
             alt="LEBOSS TECH"
-            width={132}
-            height={42}
+            width={120}
+            height={85}
             priority
           />
           <span>

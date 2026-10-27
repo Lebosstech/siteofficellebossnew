@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SystemTransition } from "@/components/experience/system-transition";
 import { ArrowUpRight, ArrowDown } from "lucide-react";
-import { TechnologyCore } from "@/components/experience/technology-core";
+import { DigitalEngine } from "@/components/experience/digital-engine";
 import { MotionController } from "@/components/experience/motion-controller";
 import {
   AutomationDemo,
@@ -47,7 +47,7 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <TechnologyCore />
+          <DigitalEngine />
         </div>
         <div className="hero-bottom mono">
           <a href="#automatisation">

@@ -129,8 +129,8 @@ try {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(base);
   await page.waitForLoadState("networkidle");
-  assert.equal(await page.locator(".core-fallback").count(), 1);
-  assert.equal(await page.locator(".core-render canvas").count(), 0);
+  assert.equal(await page.locator(".engine-window").count(), 1);
+  assert.equal(await page.locator(".digital-engine canvas").count(), 0);
   await page.locator("#automatisation").scrollIntoViewIfNeeded();
   assert.equal(
     await page
